@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_16_054107) do
+ActiveRecord::Schema.define(version: 2021_02_16_070851) do
+
+  create_table "assessments", force: :cascade do |t|
+    t.integer "rating"
+    t.string "comment"
+    t.integer "place_id", null: false
+    t.integer "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["place_id"], name: "index_assessments_on_place_id"
+    t.index ["user_id"], name: "index_assessments_on_user_id"
+  end
 
   create_table "places", force: :cascade do |t|
     t.float "lat", null: false
@@ -47,5 +58,7 @@ ActiveRecord::Schema.define(version: 2021_02_16_054107) do
     t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
+  add_foreign_key "assessments", "places"
+  add_foreign_key "assessments", "users"
   add_foreign_key "places", "users"
 end

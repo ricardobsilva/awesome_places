@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   include DeviseTokenAuth::Concerns::User
 
   has_many :places, dependent: :destroy
+  has_many :assessments, dependent: :destroy
 
   enum profile: { common: 0, admin: 1 }
 end
