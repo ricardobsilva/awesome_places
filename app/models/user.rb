@@ -5,5 +5,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
 
+  has_many :places, dependent: :destroy
+
   enum profile: { common: 0, admin: 1 }
 end
