@@ -13,6 +13,10 @@
 ActiveRecord::Schema.define(version: 2021_02_16_054107) do
 
   create_table "places", force: :cascade do |t|
+    t.float "lat", null: false
+    t.float "lng", null: false
+    t.string "name", null: false
+    t.string "description", null: false
     t.integer "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
