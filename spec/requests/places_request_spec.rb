@@ -51,4 +51,37 @@ RSpec.describe 'Places', type: :request do
       end
     end
   end
+
+  describe 'GET #assessments' do
+    it 'must return 200 http status' do
+      user = create(:user)
+      place = create(:place, user: user)
+      create(:assessment, user: user, place: place)
+
+      get "/places/#{place.id}/assessments", headers: user_headers(user)
+
+      expect(response).to have_http_status(:ok)
+    end
+
+    it 'must return all the place assessments' do
+      user = create(:user)
+      place = create(:place, user: user)
+      create(:assessment, user: user, place: place)
+
+      get "/places/#{place.id}/assessments", headers: user_headers(user)
+
+      expect(json_body[0]).to have_key(:id)
+      expect(json_body[0]).to have_key(:rating)
+      expect(json_body[0]).to have_key(:comment)
+      expect(json_body[0]).to have_key(:created_at)
+      expect(json_body[0]).to have_key(:updated_at)
+      expect(json_body[0]).to have_key(:user)
+      expect(json_body[0][:user]).to have_key(:id)
+      expect(json_body[0][:user]).to have_key(:name)
+      expect(json_body[0]).to have_key(:place)
+      expect(json_body[0][:place]).to have_key(:id)
+      expect(json_body[0][:place]).to have_key(:name)
+      expect(json_body).to be_an(Array)
+    end
+  end
 end

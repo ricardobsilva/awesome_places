@@ -5,6 +5,14 @@ class PlacesController < ApplicationController
     render json: place, status: :created
   end
 
+  def assessments
+    assessments = Assessment.where(place_id: params[:id])
+
+    render json: assessments,
+           include: { user: { only: %i[id name] }, place: { only: %i[id name] } },
+           status: :ok
+  end
+
   private
 
   def place_params
