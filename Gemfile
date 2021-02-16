@@ -22,6 +22,7 @@ gem 'puma', '~> 4.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise_token_auth', '~> 1.1', '>= 1.1.3'
+gem 'geokit-rails', '~> 2.2'
 gem 'rack-cors', '~> 0.4.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
@@ -30,9 +31,10 @@ gem 'rack-cors', '~> 0.4.0'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.2'
   gem 'rspec-rails', '~> 4.0.2'
   gem 'shoulda-matchers', '~> 4.0'
-  gem 'factory_bot_rails', '~> 5.0', '>= 5.0.2'
+  gem 'pry', '~> 0.13.1'
 end
 
 group :development do

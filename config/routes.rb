@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     registrations: 'registrations'
   }
 
-  resources :places, only: :create do
+  resources :places, only: %i[create index] do
     get 'assessments', on: :member
   end
   resources :assessments, only: :create

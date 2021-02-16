@@ -3,6 +3,62 @@
 require 'rails_helper'
 
 RSpec.describe 'Places', type: :request do
+
+  describe 'GET #index' do
+    it 'must return 200 http status' do
+      user = create(:user)
+
+      get '/places', headers: user_headers(user)
+
+      expect(response).to have_http_status(:ok)
+    end
+    context 'when find by list mode' do
+      it 'must return places by alphabetical order' do
+        user = create(:user)
+        place1 = create(:place, name: 'Rio Largo', user: user)
+        place2 = create(:place, name: 'Arapiraca', user: user)
+        place3 = create(:place, name: 'Porto Alegre', user: user)
+
+        get '/places', headers: user_headers(user)
+
+        expect(json_body[0][:id]).to eq(place2.id)
+        expect(json_body[0][:name]).to eq(place2.name)
+        expect(json_body[1][:id]).to eq(place3.id)
+        expect(json_body[1][:name]).to eq(place3.name)
+        expect(json_body[2][:id]).to eq(place1.id)
+        expect(json_body[2][:name]).to eq(place1.name)
+      end
+    end
+
+    context 'when find by map mode' do
+      it 'must return places by alphabetical order' do
+        user = create(:user)
+        place1 = create(
+          :place, name: 'Marechal Deodoro', user: user,
+                  lat: -9.767288, lng: -35.850905
+        )
+        place2 = create(
+          :place, name: 'Jequiá da Praia', user: user,
+                  lat: -10.010804, lng: -36.026543
+        )
+        place3 = create(
+          :place, name: 'Barra de São Miguel', user: user,
+                  lat: -9.823314, lng: -35.886151
+        )
+        params = { lat: -9.649818, lng: -35.708951 }
+
+        get '/places', params: params, headers: user_headers(user)
+
+        expect(json_body[0][:id]).to eq(place1.id)
+        expect(json_body[0][:name]).to eq(place1.name)
+        expect(json_body[1][:id]).to eq(place3.id)
+        expect(json_body[1][:name]).to eq(place3.name)
+        expect(json_body[2][:id]).to eq(place2.id)
+        expect(json_body[2][:name]).to eq(place2.name)
+      end
+    end
+  end
+
   describe 'POST #create' do
     context 'when pass valid data' do
       it 'must return 201 http status' do
