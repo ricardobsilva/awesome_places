@@ -25,7 +25,7 @@ jobs:
       PGHOST: 127.0.0.1
       PGUSER: postgres
       PGPASSWORD: postgres
-      RAILS_ENV: development
+      RAILS_ENV: test
     steps:
       - checkout
       - ruby/install-deps
