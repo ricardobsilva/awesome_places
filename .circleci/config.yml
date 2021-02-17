@@ -7,13 +7,13 @@ orbs:
 jobs:
   build:
     docker:
-      - image: cimg/ruby:2.7.2
+      - image: cimg/ruby:2.7.1
     steps:
       - checkout
       - ruby/install-deps
   test:
     docker:
-      - image: cimg/ruby:2.7.2
+      - image: cimg/ruby:2.7.1
       - image: circleci/postgres:9.5-alpine
         environment:
           POSTGRES_USER: dbuser
